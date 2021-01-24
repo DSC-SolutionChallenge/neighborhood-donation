@@ -12,9 +12,17 @@ import CardHeader from "components/Card/CardHeader.js";
 import CardAvatar from "components/Card/CardAvatar.js";
 import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
-
+import CustomTabs from "components/CustomTabs/CustomTabs.js";
 import avatar from "assets/img/faces/marc.jpg";
 
+import SignIn from "views/Authentication/SignIn"
+import SignUp from "views/Authentication/SignUp"
+import PasswordReset from "views/Authentication/PasswordReset"
+
+//icons
+import SupervisorAccount from "@material-ui/icons/SupervisorAccount";
+import PersonAdd from "@material-ui/icons/PersonAdd";
+import VpnKey from "@material-ui/icons/VpnKey";
 const styles = {
   cardCategoryWhite: {
     color: "rgba(255,255,255,.62)",
@@ -173,6 +181,40 @@ export default function UserProfile() {
           </Card>
         </GridItem>
       </GridContainer>
+      {/* Below is user authentication */}
+      <GridContainer>
+        <GridItem xs={12} sm={12} md={6}>
+          <CustomTabs
+            title="Authentication"
+            headerColor="primary"
+            tabs={[
+              {
+                tabName: "Sign In",
+                tabIcon: SupervisorAccount,
+                tabContent: (
+                  <SignIn />
+                )
+              },
+              {
+                tabName: "Sign Up",
+                tabIcon: PersonAdd,
+                tabContent: (
+                  <SignUp />
+                )
+              },
+              {
+                tabName: "Forgot Password",
+                tabIcon: VpnKey,
+                tabContent: (
+                  <PasswordReset />
+                )
+              }
+            ]}
+          />
+        </GridItem>
+
+      </GridContainer>
+
     </div>
   );
 }
