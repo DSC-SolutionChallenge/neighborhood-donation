@@ -28,6 +28,23 @@ const provider = new firebase.auth.GoogleAuthProvider();
 export const signInWithGoogle = () => {
     auth.signInWithPopup(provider);
 };
+
+// get current user's uid
+export const currentUserUid = async () => {
+    return auth.currentUser;
+    const curUser = auth.currentUser;
+    if (curUser)
+        return curUser.uid;
+    else
+        return null;
+};
+
+// get current user's data
+export const currentUserData = async () => {
+    return getUserDocument(auth.currentUser.uid);
+};
+
+
 // update current user's document with given data
 export const updateUserDocument = (profile) => {
     console.log("profile")
@@ -46,9 +63,10 @@ export const generateUserDocument = async (user, additionalData) => {
     const snapshot = await userRef.get();
 
     if (!snapshot.exists) {
-        const { email, displayName, photoURL } = user;
+        const { uid, email, displayName, photoURL } = user;
         try {
             await userRef.set({
+                uid,
                 displayName,
                 email,
                 photoURL,
@@ -73,8 +91,4 @@ export const getUserDocument = async (uid) => {
     } catch (error) {
         console.error("Error fetching user", error);
     }
-};
-// get current user's data
-export const currentUserData = async () => {
-    return getUserDocument(auth.currentUser.uid);
 };

@@ -29,8 +29,6 @@ const SignIn = () => {
             setPassword(value);
         }
     };
-    console.log(email)
-
     return (
         <div className="mt-8">
                     {error !== null && <div className = "py-4 bg-red-600 w-full text-white text-center mb-3">{error}</div>}
