@@ -23,6 +23,7 @@ import PasswordReset from "views/Authentication/PasswordReset"
 import SupervisorAccount from "@material-ui/icons/SupervisorAccount";
 import PersonAdd from "@material-ui/icons/PersonAdd";
 import VpnKey from "@material-ui/icons/VpnKey";
+import { Avatar } from "@material-ui/core";
 const styles = {
   cardCategoryWhite: {
     color: "rgba(255,255,255,.62)",
@@ -159,7 +160,7 @@ export default function UserProfile() {
             </CardFooter>
           </Card>
         </GridItem>
-        <GridItem xs={12} sm={12} md={4}>
+        {/* <GridItem xs={12} sm={12} md={4}>
           <Card profile>
             <CardAvatar profile>
               <a href="#pablo" onClick={e => e.preventDefault()}>
@@ -179,7 +180,10 @@ export default function UserProfile() {
               </Button>
             </CardBody>
           </Card>
-        </GridItem>
+        </GridItem> */}
+      <GridItem xs = {12} sm={12} md={4}>
+        <Avatar alt="Man" src={avatar}/>
+      </GridItem>
       </GridContainer>
       {/* Below is user authentication */}
       <GridContainer>
