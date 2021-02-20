@@ -23,7 +23,7 @@ import AuthBox from "views/Authentication/AuthBox"
 import { auth, generateUserDocument } from "../../firebase"
 
 //icons
-import {Settings, AccountCircle} from "@material-ui/icons";
+import { Settings, AccountCircle } from "@material-ui/icons";
 import SupervisorAccount from "@material-ui/icons/SupervisorAccount";
 import PersonAdd from "@material-ui/icons/PersonAdd";
 import VpnKey from "@material-ui/icons/VpnKey";
@@ -70,30 +70,30 @@ export default function UserProfile() {
   if (user) {
     return (
       <div>
-              <GridContainer>
-        <GridItem xs={12} sm={12} md={12}>
-          <CustomTabs
-            title="Profile"
-            headerColor="primary"
-            tabs={[
-              {
-                tabName: "Profile Information",
-                tabIcon: AccountCircle,
-                tabContent: (
-                  <ProfileInformation/>
-                )
-              },
-              {
-                tabName: "Edit Profile",
-                tabIcon: Settings,
-                tabContent: (
-                  <EditProfile/>
-                )
-              },
-            ]}
-          />
-        </GridItem>
-      </GridContainer>
+        <GridContainer>
+          <GridItem xs={12} sm={12} md={12}>
+            <CustomTabs
+              title="Profile"
+              headerColor="primary"
+              tabs={[
+                {
+                  tabName: "Profile Information",
+                  tabIcon: AccountCircle,
+                  tabContent: (
+                    <ProfileInformation />
+                  )
+                },
+                {
+                  tabName: "Edit Profile",
+                  tabIcon: Settings,
+                  tabContent: (
+                    <EditProfile />
+                  )
+                },
+              ]}
+            />
+          </GridItem>
+        </GridContainer>
       </div>
     );
   } else {
