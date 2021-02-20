@@ -22,6 +22,7 @@ import SignUp from "views/Authentication/SignUp"
 import PasswordReset from "views/Authentication/PasswordReset"
 import ProfileInformation from "views/UserProfile/ProfileInformation"
 import EditProfile from "views/UserProfile/EditProfile"
+import UploadFile from "views/UserProfile/UploadFile"
 
 //icons
 import SupervisorAccount from "@material-ui/icons/SupervisorAccount";
@@ -74,6 +75,13 @@ export default function UserProfile() {
                 tabIcon: Settings,
                 tabContent: (
                   <EditProfile/>
+                )
+              },
+              {
+                tabName: "Edit Profile Picture",
+                tabIcon: Settings,
+                tabContent: (
+                  <UploadFile/>
                 )
               },
             ]}

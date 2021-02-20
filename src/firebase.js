@@ -1,6 +1,7 @@
 import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
+import "firebase/storage";
 // const { createLogicalNot } = require("typescript")
 // To Deploy: firebase login; firebase init; firebase deploy;
 
@@ -17,6 +18,8 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
+const storage = firebase.storage();
+export { storage, firebase as default };
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
 
