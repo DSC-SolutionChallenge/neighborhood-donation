@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
@@ -35,6 +35,36 @@ const styles = {
   const useStyles = makeStyles(styles);
 
 export default function EditProfile(){
+
+    const[firstName, setfirstName] = useState('');
+    const[lastName, setLastName] = useState('');
+    const[location, setLocation] = useState('');
+    const[bio, setBio] = useState('');
+
+    const onChangeHandler = (event) =>{
+      const {id, value} = event.currentTarget;
+      if(id == 'firstname'){
+        setfirstName(value);
+      }
+      else if(id == 'lastname'){
+        setLastName(value);
+      }
+      else if(id == 'location'){
+        setLocation(value);
+      }
+      else if(id == 'bio'){
+        setBio(value);
+      }
+
+    }
+
+    const updateProfile = (event, firstname, lastname, location, bio) => {
+        
+
+    }
+
+
+
     const classes = useStyles();
     return(
       <div>
@@ -46,27 +76,39 @@ export default function EditProfile(){
                   <GridItem xs={12} sm={12} md={4}>
                     <CustomInput
                       labelText="Update First Name"
-                      id="company-disabled"
+                      id="firstname"
                       formControlProps={{
                         fullWidth: true
+                      }}
+                      inputProps={{
+                        value: firstName,
+                        onChange: (event) => onChangeHandler(event)
                       }}
                     />
                   </GridItem>
                   <GridItem xs={12} sm={12} md={4}>
                     <CustomInput
                       labelText="Update Last Name"
-                      id="username"
+                      id="lastname"
                       formControlProps={{
                         fullWidth: true
+                      }}
+                      inputProps={{
+                        value: lastName,
+                        onChange: (event) => onChangeHandler(event)
                       }}
                     />
                   </GridItem>
                   <GridItem xs={12} sm={12} md={4}>
                     <CustomInput
                       labelText="Update Location"
-                      id="email-address"
+                      id="location"
                       formControlProps={{
                         fullWidth: true
+                      }}
+                      inputProps={{
+                        value: location,
+                        onChange: (event) => onChangeHandler(event)
                       }}
                     />
                   </GridItem>
@@ -75,7 +117,7 @@ export default function EditProfile(){
                   <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
                       labelText="New Profile Picture"
-                      id="first-name"
+                      id="profilepic"
                       formControlProps={{
                         fullWidth: true
                       }}
@@ -84,7 +126,7 @@ export default function EditProfile(){
                   <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
                       labelText="Update Password"
-                      id="last-name"
+                      id="password"
                       formControlProps={{
                         fullWidth: true
                       }}
@@ -96,20 +138,23 @@ export default function EditProfile(){
                     <InputLabel style={{ color: "#AAAAAA" }}>Update Bio</InputLabel>
                     <CustomInput
                       labelText="Type new bio here"
-                      id="about-me"
+                      id="bio"
                       formControlProps={{
                         fullWidth: true
                       }}
                       inputProps={{
                         multiline: true,
-                        rows: 5
+                        rows: 5,
+                        value: bio,
+                        onChange: (event) => onChangeHandler(event)
+
                       }}
                     />
                   </GridItem>
                 </GridContainer>
               </CardBody>
               <CardFooter>
-                <Button color="primary">Update Profile</Button>
+                <Button color="primary" onClick={(event) => {updateProfile(event, firstName, lastName, location, bio )} }>Update Profile</Button>
               </CardFooter>
             </Card>
           </GridItem>

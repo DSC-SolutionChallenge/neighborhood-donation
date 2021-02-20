@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext} from "react";
 import {Link} from "react-router-dom";
 
 // @material-ui/core components
@@ -22,6 +22,8 @@ import SignUp from "views/Authentication/SignUp"
 import PasswordReset from "views/Authentication/PasswordReset"
 import ProfileInformation from "views/UserProfile/ProfileInformation"
 import EditProfile from "views/UserProfile/EditProfile"
+import UserProvider from "views/providers/UserProvider"
+import { UserContext } from "views/providers/UserProvider"
 
 //icons
 import SupervisorAccount from "@material-ui/icons/SupervisorAccount";
@@ -29,6 +31,7 @@ import PersonAdd from "@material-ui/icons/PersonAdd";
 import VpnKey from "@material-ui/icons/VpnKey";
 import {Settings, AccountCircle} from "@material-ui/icons";
 import { Avatar } from "@material-ui/core";
+
 
 const styles = {
   cardCategoryWhite: {
@@ -54,64 +57,70 @@ const useStyles = makeStyles(styles);
 
 export default function UserProfile() {
   const classes = useStyles();
-  return (
-    <div>
-      <GridContainer>
-        <GridItem xs={12} sm={12} md={12}>
-          <CustomTabs
-            title="Profile"
-            headerColor="primary"
-            tabs={[
-              {
-                tabName: "Profile Information",
-                tabIcon: AccountCircle,
-                tabContent: (
-                  <ProfileInformation/>
-                )
-              },
-              {
-                tabName: "Edit Profile",
-                tabIcon: Settings,
-                tabContent: (
-                  <EditProfile/>
-                )
-              },
-            ]}
-          />
-        </GridItem>
-      </GridContainer>
-      {/* Below is user authentication */}
-      <GridContainer>
-        <GridItem xs={12} sm={12} md={6}>
-          <CustomTabs
-            title="Authentication"
-            headerColor="primary"
-            tabs={[
-              {
-                tabName: "Sign In",
-                tabIcon: SupervisorAccount,
-                tabContent: (
-                  <SignIn />
-                )
-              },
-              {
-                tabName: "Sign Up",
-                tabIcon: PersonAdd,
-                tabContent: (
-                  <SignUp />
-                )
-              },
-              {
-                tabName: "Forgot Password",
-                tabIcon: VpnKey,
-                tabContent: (
-                  <PasswordReset />
-                )
-              }
-            ]}
-          />
-        </GridItem>
-      </GridContainer>
-    </div>
-  );
+  const user = useContext(UserContext);
+
+    return(
+        user ?
+          <div>
+          <GridContainer>
+            <GridItem xs={12} sm={12} md={12}>
+              <CustomTabs
+                title="Profile"
+                headerColor="primary"
+                tabs={[
+                  {
+                    tabName: "Profile Information",
+                    tabIcon: AccountCircle,
+                    tabContent: (
+                      <ProfileInformation />
+                    )
+                  },
+                  {
+                    tabName: "Edit Profile",
+                    tabIcon: Settings,
+                    tabContent: (
+                      <EditProfile/>
+                    )
+                  },
+                ]}
+              />
+            </GridItem>
+          </GridContainer>
+          </div>
+       : 
+          <div>
+          <GridContainer>
+            <GridItem xs={12} sm={12} md={6}>
+              <CustomTabs
+                title="Authentication"
+                headerColor="primary"
+                tabs={[
+                  {
+                    tabName: "Sign In",
+                    tabIcon: SupervisorAccount,
+                    tabContent: (
+                      <SignIn />
+                    )
+                  },
+                  {
+                    tabName: "Sign Up",
+                    tabIcon: PersonAdd,
+                    tabContent: (
+                      <SignUp />
+                    )
+                  },
+                  {
+                    tabName: "Forgot Password",
+                    tabIcon: VpnKey,
+                    tabContent: (
+                      <PasswordReset />
+                    )
+                  }
+                ]}
+              />
+            </GridItem>
+          </GridContainer>
+          </div>
+    );
+    
 }
