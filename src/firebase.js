@@ -35,11 +35,6 @@ export const signInWithGoogle = () => {
 // get current user's uid
 export const currentUserUid = async () => {
     return auth.currentUser;
-    const curUser = auth.currentUser;
-    if (curUser)
-        return curUser.uid;
-    else
-        return null;
 };
 
 // get current user's data
@@ -95,3 +90,53 @@ export const getUserDocument = async (uid) => {
         console.error("Error fetching user", error);
     }
 };
+
+//filter items
+export const filterItemDocuments = async (itemName, donated, received, donatedBy, receivedBy, requestedBy, orderBy, desc) =>{
+    // orderBy is one of {name, createdAt, description}
+    const itemsRef = firestore.collection('items');
+    var query = itemsRef.where('name', '!=', "");
+    // filter name
+    if (itemName && itemName.length > 0){
+        console.log("filter name")
+      query = query.where('name', ">=", itemName).where('name', "<=", itemName + '\uf8ff');}
+    query = donated? query.where('donatorUid', '!=', "") : query.where('donatorUid', '==', "");
+    query = received? query.where('receiverUid', '!=', "") : query.where('receiverUid', '==', "");
+    // filter by specific user donator, reciever, requester
+    if(donatedBy){
+        query = query.where('donatorUid', '==', donatedBy);
+        console.log("filter donatedBy")
+        
+    }
+    if(receivedBy){
+        query = query.where('receiverUid', '==', receivedBy);
+        console.log("filter receivedBy")
+
+    }
+    if(requestedBy){
+        query = query.where('requestUids', 'array-contains', requestedBy);
+        console.log("filter requestedBy")
+    }
+    // sort the query
+    if(orderBy){
+        if(desc){
+            query = query.orderBy(orderBy, "desc");
+        }else{
+            query = query.orderBy(orderBy);
+        }
+    }
+    const items = query
+      .get()
+      .then(function (querySnapshot) {
+        var result = [];
+        querySnapshot.forEach(function (doc) {
+          result.push(doc.data());
+        });
+        return result;
+      })
+      .catch(function (error) {
+        console.log("Error getting item documents: ", error);
+      });
+    return items;
+  
+}
