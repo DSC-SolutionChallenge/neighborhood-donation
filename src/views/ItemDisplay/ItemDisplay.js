@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback, useContext } from "react";
 // @material-ui/core components
+import { Link } from 'react-router-dom';
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
 // core components
@@ -80,7 +81,9 @@ const ItemDisplay = ({ itemName, donated, received, donatedBy, receivedBy, reque
     return (
         <GridContainer>
             {items.slice((page - 1) * perPage, page * perPage).map((item) => (
-                <ItemSummary itemName={item.name} itemDescription={item.description} itemPicUrl={item.picUrl} itemOwned={itemOwned} itemCreatedAt={item.createdAt}></ItemSummary>
+                <Link to={`item/${item.id}`}>
+                    <ItemSummary itemName={item.name} itemDescription={item.description} itemPicUrl={item.picUrl} itemOwned={itemOwned} itemCreatedAt={item.createdAt}></ItemSummary>
+                </Link>
             ))}
             <GridItem xs={12} sm={12} md={12}>
                 {page > 1 && <Button color="primary" onClick={() => { onClickPrev() }}>Prev</Button>}
