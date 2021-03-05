@@ -101,7 +101,7 @@ export const filterItemDocuments = async (itemName, donated, received, donatedBy
         console.log("filter name")
         query = query.where('name', ">=", itemName).where('name', "<=", itemName + '\uf8ff');
     }
-    
+
     query = donated ? query.where('donated', '==', true) : query.where('donated', '==', false);
     query = received ? query.where('received', '==', true) : query.where('received', '==', false);
     // filter by specific user donator, reciever, requester
@@ -168,3 +168,22 @@ export const updateItem = (item) => {
         .set(item)
         .catch((error) => console.error("Error updating item: ", error));
 };
+
+export const addItem = async (item) => {
+    console.log("***Create Item***")
+    console.log(item)
+    var itemRef = firestore.collection('items');
+    const itemID = itemRef
+        .add({
+            ...item
+        })
+        .then(function (docRef) {
+            console.log(docRef.id)
+            return docRef.id;
+        })
+        .catch(function (error) {
+            console.log("Error getting documents: ", error);
+        })
+    return itemID;
+}
+

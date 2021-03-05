@@ -23,6 +23,7 @@ const ItemDetail = ({ match }) => {
     const [item, setItem] = useState(null);
     const [requireLogin, setRequireLogin] = useState(false);
     const [user, setUser] = useState(null);
+    const [alreadyRequested, setAlreadyRequested] = useState(false);
     const id = params.id;
     console.log()
     const fetchItem = useCallback(async () => {
@@ -39,7 +40,7 @@ const ItemDetail = ({ match }) => {
                 setUser(null);
             else
                 setUser(user);
-                setRequireLogin(false)
+            setRequireLogin(false)
         });
     }, []);
     const incrementWaitingList = () => {
@@ -47,11 +48,13 @@ const ItemDetail = ({ match }) => {
             setRequireLogin(true)
         } else {
             var newItem = JSON.parse(JSON.stringify(item))
-            if (!newItem.requestUids.includes(user.uid)){
+            if (!newItem.requestUids.includes(user.uid)) {
                 newItem.requestUids.push(user.uid)
                 console.log(newItem)
                 updateItem(newItem)
                 setItem(newItem);
+            } else {
+                setAlreadyRequested(true)
             }
         }
     }
@@ -60,7 +63,10 @@ const ItemDetail = ({ match }) => {
     }
     return (
         <GridContainer>
-            <GridItem xs={12} sm={12} md={8}>
+            <GridItem xs={12} sm={12} md={3}>
+                <img className="itemPic" src={item.picUrl} alt="User Profile Picture" width="300" height="300" />
+            </GridItem>
+            <GridItem xs={12} sm={12} md={9}>
                 <Card>
                     <CardBody>
                         <GridContainer>
@@ -99,17 +105,17 @@ const ItemDetail = ({ match }) => {
                         </GridContainer>
 
                         <GridContainer>
-                            <GridItem xs={12} sm={12} md={4}>
-                                <Button color="primary" onClick={() => {incrementWaitingList()}}>{item.donatorUid ? "Request Item" : "Donate Item"}</Button>
+                            <GridItem xs={12} sm={12} md={12}>
+                                <Button color="primary" onClick={() => { incrementWaitingList() }}>{item.donatorUid ? "Request Item" : "Donate Item"}</Button>
                             </GridItem>
+                            {alreadyRequested && <small>You have already {item.donatorUid ? "requested" : "donated"} this item</small>}
                         </GridContainer>
                     </CardBody>
                 </Card>
             </GridItem>
-            <GridItem xs={12} sm={12} md={4}>
-                <img className="itemPic" src={item.picUrl} alt="User Profile Picture" width="300" height="300" />
-            </GridItem>
+
             {requireLogin && <AuthBox></AuthBox>}
+
         </GridContainer>
     )
 }

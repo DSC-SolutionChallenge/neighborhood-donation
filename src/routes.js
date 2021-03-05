@@ -36,6 +36,7 @@ import UpgradeToPro from "views/UpgradeToPro/UpgradeToPro.js";
 // core components/views for RTL layout
 import RTLPage from "views/RTLPage/RTLPage.js";
 import ItemDetail from "views/ItemDisplay/ItemDetail"
+import DonateRequestHandler from "views/DonateRequestItem/DonateRequestHandler"
 
 const dashboardRoutes = [
   {
@@ -116,6 +117,14 @@ const dashboardRoutes = [
     rtlName: "التطور للاحترافية",
     icon: Unarchive,
     component: ItemDetail,
+    layout: "/admin"
+  },
+  {
+    path:"/donate-request",
+    name:"Donate/Request",
+    rtlName: "التطور للاحترافية",
+    icon: LibraryBooks,
+    component: DonateRequestHandler,
     layout: "/admin"
   }
 ];
