@@ -29,6 +29,8 @@ import CardIcon from "components/Card/CardIcon.js";
 import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
 
+import ItemDisplay from "../ItemDisplay/ItemDisplay";
+
 import { bugs, website, server } from "variables/general.js";
 
 import {
@@ -38,7 +40,6 @@ import {
 } from "variables/charts.js";
 
 import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js";
-
 const useStyles = makeStyles(styles);
 
 export default function Dashboard() {
@@ -260,6 +261,8 @@ export default function Dashboard() {
           </Card>
         </GridItem>
       </GridContainer>
+
+      <ItemDisplay itemName="" donated={false} received={false} donatedBy={""} receivedBy={""} requestedBy={false} orderBy="name"></ItemDisplay>
     </div>
   );
 }
