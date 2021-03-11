@@ -33,17 +33,6 @@ import "assets/css/material-dashboard-react.css?v=1.9.0";
 const hist = createBrowserHistory();
 
 ReactDOM.render(
-<<<<<<< HEAD
-<UserProvider>
-  <Router history={hist}>
-    <Switch>
-      <Route path="/admin" component={Admin} />
-      <Route path="/rtl" component={RTL} />
-      <Redirect from="/" to="/admin/dashboard" />
-    </Switch>
-  </Router>
-</UserProvider>,document.getElementById("root"));
-=======
  <Router history={hist}>
   <Switch>
     <Route path="/admin" component={Admin} />
@@ -51,5 +40,4 @@ ReactDOM.render(
     <Redirect from="/" to="/admin/dashboard" />
   </Switch>
 </Router>,document.getElementById("root"));
->>>>>>> a99e3d81190f039ec68977be469f4f3defa50383
 
