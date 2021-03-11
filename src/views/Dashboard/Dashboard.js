@@ -262,7 +262,8 @@ export default function Dashboard() {
         </GridItem>
       </GridContainer>
 
-      <ItemDisplay itemName="" donated={false} received={false} donatedBy={""} receivedBy={""} requestedBy={false} orderBy="name"></ItemDisplay>
+      <ItemDisplay itemName="" donated={true} received={false} donatedBy={""} receivedBy={""} requestedBy={""} orderBy=""></ItemDisplay>
+      {/* <ItemDisplay itemName="" donated={true/false} received={true/false} donatedBy={uid} receivedBy={uid} requestedBy={uid} orderBy="name/createdAt"></ItemDisplay> */}
     </div>
   );
 }

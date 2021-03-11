@@ -17,7 +17,7 @@ import styles from "assets/jss/material-dashboard-react/layouts/adminStyle.js";
 
 import bgImage from "assets/img/sidebar-2.jpg";
 import logo from "assets/img/reactlogo.png";
-
+import ItemDetail from "views/ItemDisplay/ItemDetail"
 let ps;
 
 const switchRoutes = (
@@ -34,6 +34,10 @@ const switchRoutes = (
       }
       return null;
     })}
+    <Route
+      path="item/:id"
+      component={ItemDetail}
+    />
     <Redirect from="/admin" to="/admin/dashboard" />
   </Switch>
 );
@@ -96,7 +100,7 @@ export default function Admin({ ...rest }) {
     <div className={classes.wrapper}>
       <Sidebar
         routes={routes}
-        logoText={"Creative Tim"}
+        logoText={"Neighbor Care"}
         logo={logo}
         image={image}
         handleDrawerToggle={handleDrawerToggle}
@@ -116,8 +120,10 @@ export default function Admin({ ...rest }) {
             <div className={classes.container}>{switchRoutes}</div>
           </div>
         ) : (
-          <div className={classes.map}>{switchRoutes}</div>
-        )}
+            <div className={classes.map}>
+              {switchRoutes}
+            </div>
+          )}
         {getRoute() ? <Footer /> : null}
         <FixedPlugin
           handleImageClick={handleImageClick}

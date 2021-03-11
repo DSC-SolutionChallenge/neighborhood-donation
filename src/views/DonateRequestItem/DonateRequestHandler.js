@@ -28,67 +28,65 @@ import { Settings, AccountCircle } from "@material-ui/icons";
 import SupervisorAccount from "@material-ui/icons/SupervisorAccount";
 import PersonAdd from "@material-ui/icons/PersonAdd";
 import VpnKey from "@material-ui/icons/VpnKey";
-import { Avatar } from "@material-ui/core";
+
+import DonateRequestItem from "./DonateRequestItem"
 
 
-const styles = {
-  cardCategoryWhite: {
-    color: "rgba(255,255,255,.62)",
-    margin: "0",
-    fontSize: "14px",
-    marginTop: "0",
-    marginBottom: "0"
-  },
-  cardTitleWhite: {
-    color: "#FFFFFF",
-    marginTop: "0px",
-    minHeight: "auto",
-    fontWeight: "300",
-    fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
-    marginBottom: "3px",
-    textDecoration: "none"
-  }
-};
+export default function DonateRequestHandler() {
+  const [user, setUser] = useState(null);
 
-const useStyles = makeStyles(styles);
+  useEffect(() => {
+    auth.onAuthStateChanged(async userAuth => {
+      console.log(userAuth)
+      const user = await generateUserDocument(userAuth);
+      console.log(user)
+      if (!user)
+        setUser(null);
+      else
+        setUser({ user });
+    });
+  }, []);
 
 
-
-export default function UserProfile() {
-  
-  const classes = useStyles();
-  const user = useContext(UserContext);
-
-    return(
-        user ?
-          <div>
-          <GridContainer>
-            <GridItem xs={12} sm={12} md={12}>
-              <CustomTabs
-                title="Profile"
-                headerColor="primary"
-                tabs={[
-                  {
-                    tabName: "Profile Information",
-                    tabIcon: AccountCircle,
-                    tabContent: (
-                      <ProfileInformation />
-                    )
-                  },
-                  {
-                    tabName: "Edit Profile",
-                    tabIcon: Settings,
-                    tabContent: (
-                      <EditProfile/>
-                    )
-                  },
-                ]}
-              />
-            </GridItem>
-          </GridContainer>
-          </div>
-       : 
-       <div style={{
+  if (user) {
+    return (
+      <div>
+        <GridContainer>
+          <GridItem xs={12} sm={12} md={12}>
+            <CustomTabs
+              title="Donate/Request Items"
+              headerColor="primary"
+              tabs={[
+                {
+                  tabName: "Donate",
+                  tabIcon: AccountCircle,
+                  tabContent: (
+                    <DonateRequestItem donate={true}/>
+                  )
+                },
+                {
+                  tabName: "Request",
+                  tabIcon: Settings,
+                  tabContent: (
+                    <DonateRequestItem donate={false}/>
+                  )
+                },
+                {
+                  tabName: "Upload Item Picture",
+                  tabIcon: Settings,
+                  tabContent: (
+                    <UploadFile/>
+                  )
+                },
+              ]}
+            />
+          </GridItem>
+        </GridContainer>
+      </div>
+    );
+  } else {
+    return (
+      <div style={{
         position: 'absolute', left: '50%', top: '50%',
         transform: 'translate(-50%, -50%)',
         width: "600px"
@@ -96,4 +94,5 @@ export default function UserProfile() {
         <AuthBox></AuthBox>
       </div>
     );
+  }
 }
