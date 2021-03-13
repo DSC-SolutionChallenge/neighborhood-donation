@@ -30,6 +30,8 @@ import PersonAdd from "@material-ui/icons/PersonAdd";
 import VpnKey from "@material-ui/icons/VpnKey";
 import { Avatar } from "@material-ui/core";
 
+import { UserContext } from "views/providers/UserProvider"
+
 
 const styles = {
   cardCategoryWhite: {
@@ -56,39 +58,61 @@ const useStyles = makeStyles(styles);
 
 export default function UserProfile() {
   
+  const [user, setUser] = useState(null);
   const classes = useStyles();
-  const user = useContext(UserContext);
 
-    return(
-        user ?
-          <div>
-          <GridContainer>
-            <GridItem xs={12} sm={12} md={12}>
-              <CustomTabs
-                title="Profile"
-                headerColor="primary"
-                tabs={[
-                  {
-                    tabName: "Profile Information",
-                    tabIcon: AccountCircle,
-                    tabContent: (
-                      <ProfileInformation />
-                    )
-                  },
-                  {
-                    tabName: "Edit Profile",
-                    tabIcon: Settings,
-                    tabContent: (
-                      <EditProfile/>
-                    )
-                  },
-                ]}
-              />
-            </GridItem>
-          </GridContainer>
-          </div>
-       : 
-       <div style={{
+  useEffect(() => {
+    auth.onAuthStateChanged(async userAuth => {
+      console.log(userAuth)
+      const user = await generateUserDocument(userAuth);
+      console.log(user)
+      if (!user)
+        setUser(null);
+      else
+        setUser({ user });
+    });
+  }, []);
+
+
+  if (user) {
+    return (
+      <div>
+        <GridContainer>
+          <GridItem xs={12} sm={12} md={12}>
+            <CustomTabs
+              title="Profile"
+              headerColor="primary"
+              tabs={[
+                {
+                  tabName: "Profile Information",
+                  tabIcon: AccountCircle,
+                  tabContent: (
+                    <ProfileInformation />
+                  )
+                },
+                {
+                  tabName: "Edit Profile",
+                  tabIcon: Settings,
+                  tabContent: (
+                    <EditProfile />
+                  )
+                },
+                {
+                  tabName: "Upload Profile Picture",
+                  tabIcon: Settings,
+                  tabContent: (
+                    <UploadFile/>
+                  )
+                },
+              ]}
+            />
+          </GridItem>
+        </GridContainer>
+      </div>
+    );
+  } else {
+    return (
+      <div style={{
         position: 'absolute', left: '50%', top: '50%',
         transform: 'translate(-50%, -50%)',
         width: "600px"
@@ -96,4 +120,5 @@ export default function UserProfile() {
         <AuthBox></AuthBox>
       </div>
     );
+  }
 }

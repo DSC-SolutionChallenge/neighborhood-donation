@@ -50,7 +50,7 @@ export const updateUserDocument = (profile) => {
     return firestore
         .collection("users")
         .doc(auth.currentUser.uid)
-        .set(profile)
+        .set(profile, {merge:true})
         .catch((error) => console.error("Error: ", error));
 };
 // store user info into database <users> collection

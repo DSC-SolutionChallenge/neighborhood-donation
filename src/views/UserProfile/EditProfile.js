@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState} from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -11,6 +11,8 @@ import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
+
+import { auth, updateUserInfo, updateUserDocument} from "../../firebase"
 
 const styles = {
     cardCategoryWhite: {
@@ -35,18 +37,14 @@ const styles = {
 
 export default function EditProfile(){
 
-    const[firstName, setfirstName] = useState('');
-    const[lastName, setLastName] = useState('');
+    const[name, setName] = useState('');
     const[location, setLocation] = useState('');
     const[bio, setBio] = useState('');
 
     const onChangeHandler = (event) =>{
       const {id, value} = event.currentTarget;
-      if(id == 'firstname'){
-        setfirstName(value);
-      }
-      else if(id == 'lastname'){
-        setLastName(value);
+      if(id == 'name'){
+        setName(value);
       }
       else if(id == 'location'){
         setLocation(value);
@@ -57,9 +55,18 @@ export default function EditProfile(){
 
     }
 
-    const updateProfile = (event, firstname, lastname, location, bio) => {
+    const updateProfile = (event, name, location, bio) => {
         
+        const data ={
+          displayName: name,
+          location: location, 
+          bio: bio
+        };
+        updateUserDocument(data);
 
+        setName("");
+        setLocation("");
+        setBio("");
     }
 
 
@@ -72,33 +79,20 @@ export default function EditProfile(){
             <Card>
               <CardBody>
                 <GridContainer>
-                  <GridItem xs={12} sm={12} md={4}>
+                  <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
-                      labelText="Update First Name"
-                      id="firstname"
+                      labelText="Update Name"
+                      id="name"
                       formControlProps={{
                         fullWidth: true
                       }}
                       inputProps={{
-                        value: firstName,
+                        value: name,
                         onChange: (event) => onChangeHandler(event)
                       }}
                     />
                   </GridItem>
-                  <GridItem xs={12} sm={12} md={4}>
-                    <CustomInput
-                      labelText="Update Last Name"
-                      id="lastname"
-                      formControlProps={{
-                        fullWidth: true
-                      }}
-                      inputProps={{
-                        value: lastName,
-                        onChange: (event) => onChangeHandler(event)
-                      }}
-                    />
-                  </GridItem>
-                  <GridItem xs={12} sm={12} md={4}>
+                  <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
                       labelText="Update Location"
                       id="location"
@@ -153,7 +147,7 @@ export default function EditProfile(){
                 </GridContainer>
               </CardBody>
               <CardFooter>
-                <Button color="primary" onClick={(event) => {updateProfile(event, firstName, lastName, location, bio )} }>Update Profile</Button>
+                <Button color="primary" onClick={(event) => {updateProfile(event, name, location, bio )} }>Update Profile</Button>
               </CardFooter>
             </Card>
           </GridItem>
