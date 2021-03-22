@@ -34,11 +34,11 @@ const switchRoutes = (
       }
       return null;
     })}
-    <Route
+    {/* <Route
       path="item/:id"
       component={ItemDetail}
     />
-    <Redirect from="/admin" to="/admin/dashboard" />
+    <Redirect from="/admin" to="/admin/dashboard" /> */}
   </Switch>
 );
 
@@ -98,8 +98,11 @@ export default function Admin({ ...rest }) {
   }, [mainPanel]);
   return (
     <div className={classes.wrapper}>
+      {/* Side navigation bar */}
       <Sidebar
-        routes={routes}
+        routes={routes.filter(function(route){
+          return (route.name !== "ItemDetail");
+        })}
         logoText={"Neighbor Care"}
         logo={logo}
         image={image}

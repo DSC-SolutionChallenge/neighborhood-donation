@@ -58,6 +58,22 @@ const ItemDetail = ({ match }) => {
             }
         }
     }
+
+    const markReceivedDonated = (markReceived) => {
+        if (!markReceived){
+            var newItem = JSON.parse(JSON.stringify(item))
+            // newItem.receiverUid = user.uid
+            newItem.received = true
+            updateItem(newItem)
+            setItem(newItem);
+        }else{
+            var newItem = JSON.parse(JSON.stringify(item))
+            // newItem.donatorUid = user.uid
+            newItem.donated = true
+            updateItem(newItem)
+            setItem(newItem);
+        }
+    }
     if (!item) {
         return (<div></div>);
     }
@@ -109,6 +125,16 @@ const ItemDetail = ({ match }) => {
                                 <Button color="primary" onClick={() => { incrementWaitingList() }}>{item.donatorUid ? "Request Item" : "Donate Item"}</Button>
                             </GridItem>
                             {alreadyRequested && <small>You have already {item.donatorUid ? "requested" : "donated"} this item</small>}
+                            {/* If current user requested, then display mark received button */}
+                            {(user && item.receiverUid === user.uid) &&
+                                <GridItem xs={12} sm={12} md={12}>
+                                    <Button color="primary" onClick={() => { markReceivedDonated(true) }}>Mark Received</Button>
+                                </GridItem>}
+                                {(user && item.donatorUid === user.uid) &&
+                                <GridItem xs={12} sm={12} md={12}>
+                                    <Button color="primary" onClick={() => { markReceivedDonated(false) }}>Mark Donated</Button>
+                                </GridItem>}
+
                         </GridContainer>
                     </CardBody>
                 </Card>

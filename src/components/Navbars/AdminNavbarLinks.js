@@ -20,7 +20,7 @@ import CustomInput from "components/CustomInput/CustomInput.js";
 import Button from "components/CustomButtons/Button.js";
 import {auth} from "../../firebase"
 import styles from "assets/jss/material-dashboard-react/components/headerLinksStyle.js";
-
+import { Link } from 'react-router-dom';
 const useStyles = makeStyles(styles);
 
 export default function AdminNavbarLinks() {
@@ -197,7 +197,8 @@ export default function AdminNavbarLinks() {
                       onClick={handleCloseProfile}
                       className={classes.dropdownItem}
                     >
-                      Profile
+                      <Link to="user" style={{ textDecoration: 'none' }}>Profile</Link>
+                      
                     </MenuItem>
                     <MenuItem
                       onClick={handleCloseProfile}

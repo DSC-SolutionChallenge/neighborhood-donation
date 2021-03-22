@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect, useCallback, useContext } from "rea
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
+import { Link } from 'react-router-dom';
 // core components
 import CardIcon from "components/Card/CardIcon.js";
 import GridItem from "components/Grid/GridItem.js";
@@ -32,32 +33,35 @@ import VpnKey from "@material-ui/icons/VpnKey";
 import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js";
 const useStyles = makeStyles(styles);
 
-const ItemSummary = ({ itemName, itemDescription, itemPicUrl, itemOwned, itemCreatedAt }) => {
-    const classes = useStyles();
-    return (
-        <GridItem xs={12} sm={6} md={3}>
-            <Card>
-                <CardHeader color="success" stats icon>
-                    <CardIcon color="info">
-                        <img  src={itemPicUrl} alt="Item" width="100%" />
-                    </CardIcon>
-                </CardHeader>
+const ItemSummary = ({ item }) => {
+  const classes = useStyles();
+  const itemOwned = item.donated && item.received
+  return (
+    <GridItem xs={12} sm={6} md={3} style={{marginBottom:"30px"}}>
+      <Card style={{height:"100%"}}>
+        <CardHeader color="success" stats icon>
+          <CardIcon color="info">
+            <img src={item.picUrl} alt="Item" width="100%" />
+          </CardIcon>
+        </CardHeader>
 
-                <CardBody>
-              <h3 className={classes.cardTitle}>{itemName}</h3>
-              <p className={classes.cardCategory}>
-                {itemDescription}
-              </p>
-            </CardBody>
-            <CardFooter chart>
-              <div className={classes.stats}>
-                {itemOwned ? "Owned: " + itemCreatedAt : itemCreatedAt }
-              </div>
-            </CardFooter>
+        <CardBody>
+          <Link to={`item/${item.id}`} style={{ textDecoration: 'none' }}>
+            <h3 className={classes.cardTitle}>{item.name}</h3>
+          </Link>
+          <p className={classes.cardCategory}>
+            {item.description}
+          </p>
+        </CardBody>
+        <CardFooter chart>
+          <div className={classes.stats}>
+            {itemOwned ? "Owned: " + item.createdAt : item.createdAt}
+          </div>
+        </CardFooter>
 
-            </Card>
-        </GridItem>
-    );
+      </Card>
+    </GridItem>
+  );
 
 }
 export default ItemSummary;

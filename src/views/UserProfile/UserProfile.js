@@ -31,6 +31,7 @@ import VpnKey from "@material-ui/icons/VpnKey";
 import { Avatar } from "@material-ui/core";
 
 import { UserContext } from "views/providers/UserProvider"
+import ItemDisplay from "../ItemDisplay/ItemDisplay";
 
 
 const styles = {
@@ -72,7 +73,7 @@ export default function UserProfile() {
         setUser({ user });
     });
   }, []);
-
+  console.log(user)
 
   if (user) {
     return (
@@ -102,6 +103,20 @@ export default function UserProfile() {
                   tabIcon: Settings,
                   tabContent: (
                     <UploadFile/>
+                  )
+                },
+                {
+                  tabName: "Donated Item",
+                  tabIcon: Settings,
+                  tabContent: (
+                    <ItemDisplay itemName="" donated={true} received={false} donatedBy={user.uid} receivedBy={""} requestedBy={""} orderBy=""></ItemDisplay>
+                  )
+                },
+                {
+                  tabName: "Requested Item",
+                  tabIcon: Settings,
+                  tabContent: (
+                    <ItemDisplay itemName="" donated={false} received={true} donatedBy={""} receivedBy={user.uid} requestedBy={""} orderBy=""></ItemDisplay>
                   )
                 },
               ]}
