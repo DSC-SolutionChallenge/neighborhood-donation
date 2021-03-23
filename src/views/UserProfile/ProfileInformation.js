@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext} from "react";
 import {Link} from "react-router-dom";
 
 // @material-ui/core components
@@ -16,6 +16,9 @@ import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
 import CustomTabs from "components/CustomTabs/CustomTabs.js";
 import avatar from "assets/img/faces/marc.jpg";
+
+import UserProvider from "views/providers/UserProvider"
+import { UserContext } from "views/providers/UserProvider"
 
 const styles = {
   cardCategoryWhite: {
@@ -38,9 +41,15 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-
-export default function UserProfile() {
+export default function ProfileInformation() {
   const classes = useStyles();
+
+  const user = useContext(UserContext);
+ 
+  const {displayName, location, bio} = user;
+
+  console.log(user);
+
   return (
     <div>
       <GridContainer>
@@ -50,17 +59,17 @@ export default function UserProfile() {
               <GridContainer>
                   <GridItem xs={12} sm={12} md={4}>
                     <InputLabel style={{ color: "#AAAAAA" }}>Name</InputLabel>
-                    <h4>Jasmina Brar</h4>
+                    <h4>{displayName}</h4>
                   </GridItem>
                   <GridItem xs={12} sm={12} md={4}>
                     <InputLabel style={{ color: "#AAAAAA" }}>Location</InputLabel>
-                    <h4>Toronto</h4>
+                    <h4>{location}</h4>
                   </GridItem>
               </GridContainer>
               <GridContainer>
                   <GridItem xs={12} sm={12} md={8}>
                     <InputLabel style={{ color: "#AAAAAA" }}>Bio</InputLabel>
-                    <h4>UofT CS</h4>
+                    <h4>{bio}</h4>
                   </GridItem>
                 </GridContainer>
             </CardBody>

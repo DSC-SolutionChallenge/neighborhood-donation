@@ -28,39 +28,12 @@ import { Settings, AccountCircle } from "@material-ui/icons";
 import SupervisorAccount from "@material-ui/icons/SupervisorAccount";
 import PersonAdd from "@material-ui/icons/PersonAdd";
 import VpnKey from "@material-ui/icons/VpnKey";
-import { Avatar } from "@material-ui/core";
 
-import { UserContext } from "views/providers/UserProvider"
-import ItemDisplay from "../ItemDisplay/ItemDisplay";
+import DonateRequestItem from "./DonateRequestItem"
 
 
-const styles = {
-  cardCategoryWhite: {
-    color: "rgba(255,255,255,.62)",
-    margin: "0",
-    fontSize: "14px",
-    marginTop: "0",
-    marginBottom: "0"
-  },
-  cardTitleWhite: {
-    color: "#FFFFFF",
-    marginTop: "0px",
-    minHeight: "auto",
-    fontWeight: "300",
-    fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
-    marginBottom: "3px",
-    textDecoration: "none"
-  }
-};
-
-const useStyles = makeStyles(styles);
-
-
-
-export default function UserProfile() {
-  
+export default function DonateRequestHandler() {
   const [user, setUser] = useState(null);
-  const classes = useStyles();
 
   useEffect(() => {
     auth.onAuthStateChanged(async userAuth => {
@@ -73,7 +46,7 @@ export default function UserProfile() {
         setUser({ user });
     });
   }, []);
-  console.log(user)
+
 
   if (user) {
     return (
@@ -81,42 +54,28 @@ export default function UserProfile() {
         <GridContainer>
           <GridItem xs={12} sm={12} md={12}>
             <CustomTabs
-              title="Profile"
+              title="Donate/Request Items"
               headerColor="primary"
               tabs={[
                 {
-                  tabName: "Profile Information",
+                  tabName: "Donate",
                   tabIcon: AccountCircle,
                   tabContent: (
-                    <ProfileInformation />
+                    <DonateRequestItem donate={true}/>
                   )
                 },
                 {
-                  tabName: "Edit Profile",
+                  tabName: "Request",
                   tabIcon: Settings,
                   tabContent: (
-                    <EditProfile />
+                    <DonateRequestItem donate={false}/>
                   )
                 },
                 {
-                  tabName: "Upload Profile Picture",
+                  tabName: "Upload Item Picture",
                   tabIcon: Settings,
                   tabContent: (
                     <UploadFile/>
-                  )
-                },
-                {
-                  tabName: "Donated Item",
-                  tabIcon: Settings,
-                  tabContent: (
-                    <ItemDisplay itemName="" donated={true} received={false} donatedBy={user.uid} receivedBy={""} requestedBy={""} orderBy=""></ItemDisplay>
-                  )
-                },
-                {
-                  tabName: "Requested Item",
-                  tabIcon: Settings,
-                  tabContent: (
-                    <ItemDisplay itemName="" donated={false} received={true} donatedBy={""} receivedBy={user.uid} requestedBy={""} orderBy=""></ItemDisplay>
                   )
                 },
               ]}

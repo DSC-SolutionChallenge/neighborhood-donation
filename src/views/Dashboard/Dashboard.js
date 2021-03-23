@@ -46,7 +46,7 @@ export default function Dashboard() {
   const classes = useStyles();
   return (
     <div>
-      <GridContainer>
+      {/* <GridContainer>
         <GridItem xs={12} sm={6} md={3}>
           <Card>
             <CardHeader color="warning" stats icon>
@@ -260,9 +260,10 @@ export default function Dashboard() {
             </CardBody>
           </Card>
         </GridItem>
-      </GridContainer>
+      </GridContainer> */}
 
-      <ItemDisplay itemName="" donated={false} received={false} donatedBy={""} receivedBy={""} requestedBy={false} orderBy="name"></ItemDisplay>
+      <ItemDisplay itemName="" donated={true} received={false} donatedBy={""} receivedBy={""} requestedBy={""} orderBy=""></ItemDisplay>
+      {/* <ItemDisplay itemName="" donated={true/false} received={true/false} donatedBy={uid} receivedBy={uid} requestedBy={uid} orderBy="name/createdAt"></ItemDisplay> */}
     </div>
   );
 }
