@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, {useContext, useState} from "react";
 import {Link} from "react-router-dom";
 
 // @material-ui/core components
@@ -19,6 +19,9 @@ import avatar from "assets/img/faces/marc.jpg";
 
 import UserProvider from "views/providers/UserProvider"
 import { UserContext } from "views/providers/UserProvider"
+import { storage, setUserImage} from "../../firebase";
+import "firebase/firestore";
+import "firebase/storage";
 
 const styles = {
   cardCategoryWhite: {
@@ -42,11 +45,42 @@ const styles = {
 const useStyles = makeStyles(styles);
 
 export default function ProfileInformation() {
-  const classes = useStyles();
-
+  
   const user = useContext(UserContext);
- 
-  const {displayName, location, bio} = user;
+  const {displayName, location, bio, photoURL} = user;
+
+  const classes = useStyles();
+  const [image, setImage] = useState(null);
+  const [url, setUrl] = useState(null);
+
+  const handleChange = e => {
+    if(e.target.files[0]){
+        setImage(e.target.files[0]);
+    }
+  };
+
+  const handleUpload = () => {
+      const uploadTask = storage.ref(`profileImage/${image.name}`).put(image);
+      
+      uploadTask.on(
+          "state_changed",
+          snapshot => {},
+          error => {
+              console.log(error);
+          },
+          () => {
+              storage
+              .ref(`profileImage`)
+              .child(image.name)
+              .getDownloadURL()
+              .then(url => {
+                  console.log(url);
+                  setUrl(url);
+                  setUserImage(url);
+              });
+          }
+      );
+  };
 
   console.log(user);
 
@@ -72,11 +106,15 @@ export default function ProfileInformation() {
                     <h4>{bio}</h4>
                   </GridItem>
                 </GridContainer>
+                <GridContainer>
+                    <input type="file" onChange={handleChange} />
+                    <Button onClick={handleUpload} color="primary">Upload Profile Picture</Button>
+                  </GridContainer>
             </CardBody>
           </Card>
         </GridItem>
         <GridItem xs={12} sm={12} md={4}>
-          <img className = "UserProfilePic" src = {avatar} alt = "User Profile Picture" width = "300" height = "300" />
+          <img className = "UserProfilePic" src = {photoURL} alt = "User Profile Picture" width = "300" height = "300" />
         </GridItem>
       </GridContainer>
     </div>

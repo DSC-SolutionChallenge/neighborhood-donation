@@ -99,13 +99,6 @@ export default function UserProfile() {
                   )
                 },
                 {
-                  tabName: "Upload Profile Picture",
-                  tabIcon: Settings,
-                  tabContent: (
-                    <UploadFile/>
-                  )
-                },
-                {
                   tabName: "Donated Item",
                   tabIcon: Settings,
                   tabContent: (

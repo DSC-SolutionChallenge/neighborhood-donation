@@ -32,6 +32,7 @@ import VpnKey from "@material-ui/icons/VpnKey";
 import DonateRequestItem from "./DonateRequestItem"
 
 
+
 export default function DonateRequestHandler() {
   const [user, setUser] = useState(null);
 
@@ -61,7 +62,7 @@ export default function DonateRequestHandler() {
                   tabName: "Donate",
                   tabIcon: AccountCircle,
                   tabContent: (
-                    <DonateRequestItem donate={true}/>
+                    <DonateRequestItem donate={true}/>     
                   )
                 },
                 {
@@ -69,13 +70,6 @@ export default function DonateRequestHandler() {
                   tabIcon: Settings,
                   tabContent: (
                     <DonateRequestItem donate={false}/>
-                  )
-                },
-                {
-                  tabName: "Upload Item Picture",
-                  tabIcon: Settings,
-                  tabContent: (
-                    <UploadFile/>
                   )
                 },
               ]}

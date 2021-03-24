@@ -53,6 +53,33 @@ export const updateUserDocument = (profile) => {
         .set(profile, {merge:true})
         .catch((error) => console.error("Error: ", error));
 };
+
+//updat user profile with the given imageUrl
+export const setUserImage = async (imageUrl) => {
+    console.log(imageUrl)
+    try {
+        return firestore
+            .collection("items")
+            .doc(auth.currentUser.uid)
+            .set({ photoURL: imageUrl }, {merge:true});
+    } catch (error) {
+        return console.error("Error setting image: ", error);
+    }
+};
+
+export const setitemImage = async (item, imageUrl) => {
+    console.log(item, imageUrl)
+    try {
+        return firestore
+            .collection("users")
+            .doc(item.id)
+            .set({ picUrl: imageUrl }, {merge:true});
+    } catch (error) {
+        return console.error("Error setting image: ", error);
+    }
+};
+
+
 // store user info into database <users> collection
 export const generateUserDocument = async (user, additionalData) => {
     if (!user) return;

@@ -21,7 +21,9 @@ import UploadFile from "views/UserProfile/UploadFile"
 
 // import for the registration box
 import AuthBox from "views/Authentication/AuthBox"
-import { auth, generateUserDocument, addItem } from "../../firebase"
+import { auth, generateUserDocument, addItem, storage } from "../../firebase"
+import "firebase/firestore";
+import "firebase/storage";
 
 //icons
 import { Settings, AccountCircle } from "@material-ui/icons";
@@ -35,7 +37,8 @@ export default function DonateRequestItem({donate}) {
     const [user, setUser] = useState(null);
     const [itemName, setItemName] = useState("");
     const [itemDescription, setItemDescription] = useState("");
-    const [picUrl, setPicUrl] = useState("https://i.ibb.co/dk89m76/profile.png");
+    const [image, setImage] = useState(null);
+    const [picUrl, setPicUrl] = useState(null);
 
     useEffect(() => {
         auth.onAuthStateChanged(async userAuth => {
@@ -48,6 +51,33 @@ export default function DonateRequestItem({donate}) {
                 setUser(user);
         });
     }, []);
+
+    const handleChange = e => {
+        if(e.target.files[0]){
+            setImage(e.target.files[0]);
+        }
+      };
+    const handleUpload = () => {
+        const uploadTask = storage.ref(`itemImage/${image.name}`).put(image);
+          
+        uploadTask.on(
+            "state_changed",
+            snapshot => {},
+            error => {
+                console.log(error);
+            },
+            () => {
+                storage
+                .ref(`itemImage`)
+                .child(image.name)
+                .getDownloadURL()
+                .then(picUrl => {
+                    console.log(picUrl);
+                    setPicUrl(picUrl);
+                });
+            }
+        );
+    };
 
     const onChangeHandler = (event) => {
         const { id, value } = event.currentTarget;
@@ -141,6 +171,10 @@ export default function DonateRequestItem({donate}) {
                                             }}
                                         />
                                     </GridItem>
+                                </GridContainer>
+                                <GridContainer>
+                                    <input type="file" onChange={handleChange} />
+                                    <Button onClick={handleUpload} color="primary">Upload Item Image</Button>
                                 </GridContainer>
                             </CardBody>
                             <CardFooter>
