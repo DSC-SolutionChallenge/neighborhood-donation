@@ -107,6 +107,7 @@ export default function ProfileInformation() {
                   </GridItem>
                 </GridContainer>
                 <GridContainer>
+                    
                     <input type="file" onChange={handleChange} />
                     <Button onClick={handleUpload} color="primary">Upload Profile Picture</Button>
                   </GridContainer>
