@@ -41,7 +41,7 @@ const ItemSummary = ({ item }) => {
       <Card style={{height:"100%"}}>
         <CardHeader color="success" stats icon>
           <CardIcon color="info">
-            <img src={item.picUrl} alt="Item" width="100%" />
+            <img src={item.picUrl} alt="Item" width="220px" />
           </CardIcon>
         </CardHeader>
 
