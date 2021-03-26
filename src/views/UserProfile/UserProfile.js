@@ -17,7 +17,7 @@ import avatar from "assets/img/faces/marc.jpg";
 
 import ProfileInformation from "views/UserProfile/ProfileInformation"
 import EditProfile from "views/UserProfile/EditProfile"
-
+// import UploadFile from "views/UserProfile/UploadFile"
 
 // import for the registration box
 import AuthBox from "views/Authentication/AuthBox"

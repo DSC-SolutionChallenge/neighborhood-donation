@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback, useContext } from "react";
 import { Link } from 'react-router-dom';
-import { getItemById, auth, updateItem, generateUserDocument } from "../../firebase"
+import { getItemById, auth, updateItem, generateUserDocument, getUserDocument } from "../../firebase"
 
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -23,12 +23,15 @@ const ItemDetail = ({ match }) => {
     const [item, setItem] = useState(null);
     const [requireLogin, setRequireLogin] = useState(false);
     const [user, setUser] = useState(null);
+    const [donatorRequester, setDonatorRequester] = useState(null);
     const [alreadyRequested, setAlreadyRequested] = useState(false);
     const id = params.id;
-    console.log()
     const fetchItem = useCallback(async () => {
         const item = await getItemById(id);
         setItem(item)
+        const uid = item.donatorUid ? item.donatorUid : item.receiverUid
+        const user_tmp = await getUserDocument(uid)
+        setDonatorRequester(user_tmp)
     }, []);
     useEffect(() => {
         fetchItem()
@@ -43,6 +46,7 @@ const ItemDetail = ({ match }) => {
             setRequireLogin(false)
         });
     }, []);
+    console.log(donatorRequester)
     const incrementWaitingList = () => {
         if (!user) {
             setRequireLogin(true)
@@ -60,13 +64,13 @@ const ItemDetail = ({ match }) => {
     }
 
     const markReceivedDonated = (markReceived) => {
-        if (!markReceived){
+        if (!markReceived) {
             var newItem = JSON.parse(JSON.stringify(item))
             // newItem.receiverUid = user.uid
             newItem.received = true
             updateItem(newItem)
             setItem(newItem);
-        }else{
+        } else {
             var newItem = JSON.parse(JSON.stringify(item))
             // newItem.donatorUid = user.uid
             newItem.donated = true
@@ -96,7 +100,7 @@ const ItemDetail = ({ match }) => {
                             </GridItem>
                             <GridItem xs={12} sm={12} md={4}>
                                 <InputLabel style={{ color: "#AAAAAA" }}>{item.donatorUid ? "Donated By" : "Requested By"}</InputLabel>
-                                <h4>{item.donatorUid ? item.donatorUid : item.receiverUid}</h4>
+                                <h4>{donatorRequester?donatorRequester.displayName:""}</h4>
                             </GridItem>
                         </GridContainer>
                         <GridContainer>
@@ -130,7 +134,7 @@ const ItemDetail = ({ match }) => {
                                 <GridItem xs={12} sm={12} md={12}>
                                     <Button color="primary" onClick={() => { markReceivedDonated(true) }}>Mark Received</Button>
                                 </GridItem>}
-                                {(user && item.donatorUid === user.uid) &&
+                            {(user && item.donatorUid === user.uid) &&
                                 <GridItem xs={12} sm={12} md={12}>
                                     <Button color="primary" onClick={() => { markReceivedDonated(false) }}>Mark Donated</Button>
                                 </GridItem>}
