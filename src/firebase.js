@@ -59,7 +59,7 @@ export const setUserImage = async (imageUrl) => {
     console.log(imageUrl)
     try {
         return firestore
-            .collection("items")
+            .collection("users")
             .doc(auth.currentUser.uid)
             .set({ photoURL: imageUrl }, {merge:true});
     } catch (error) {
@@ -71,7 +71,7 @@ export const setitemImage = async (item, imageUrl) => {
     console.log(item, imageUrl)
     try {
         return firestore
-            .collection("users")
+            .collection("items")
             .doc(item.id)
             .set({ picUrl: imageUrl }, {merge:true});
     } catch (error) {
