@@ -17,8 +17,8 @@ This platform plays a better role of delivering information among more people th
 ## Set-up Instruction
 - This project is set up based on Material Dashboard React 
 - It's run by NodeJS, so npm needs to be installed
-- Clone the repo: `git clone https://github.com/DSC-SolutionChallenge/neighborhood-donation‘
-- Run the project: `npm start‘
+- Clone the repo: git clone https://github.com/DSC-SolutionChallenge/neighborhood-donation
+- Run the project: npm start
 
 ## Browser Support
 
