@@ -1,7 +1,7 @@
 ## Table of Contents
 
 * [Link to Video](#presenting-video)
-* [Introductions and Goals] (#intro)
+* [Introductions and Goals](#intro)
 * [Set-up Instruction](#quick-start)
 * [Browser Support](#browser-support)
 * [File Structure](#file-structure)
